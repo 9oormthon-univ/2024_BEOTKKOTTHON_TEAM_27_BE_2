@@ -10,7 +10,10 @@ router = APIRouter(
 )
 
 REST_API_KEY = config.REST_API_KEY
-
+MAX_TOKENS = int(config.MAX_TOKENS)
+TEMPERATURE = float(config.TEMPERATURE)
+TOP_P = float(config.TOP_P)
+N = int(config.N)
 
 @router.post("/result")
 def get_result(request: KoGPTRequest):
@@ -18,10 +21,10 @@ def get_result(request: KoGPTRequest):
         'https://api.kakaobrain.com/v1/inference/kogpt/generation',
         json={
             'prompt': request.content,
-            'max_tokens': 300,
-            'temperature': 1.0,
-            'top_p': 1.0,
-            'n': 1
+            'max_tokens': MAX_TOKENS,
+            'temperature': TEMPERATURE,
+            'top_p': TOP_P,
+            'n': N
         },
         headers={
             'Authorization': 'KakaoAK ' + REST_API_KEY,
