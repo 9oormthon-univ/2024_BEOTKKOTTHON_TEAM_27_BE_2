@@ -1,5 +1,3 @@
-from tkinter import Image
-
 from posting_schema import PostingTextRequest, PostingImageRequest
 
 
@@ -30,7 +28,7 @@ def create_prompt_image(request: PostingImageRequest):
 
 def create_image(image_url: str, text: str):
     # 버킷 접근해서 이미지 가져오기
-    image = Image.open(image_url)
+    # image = Image.open(image_url)
 
     # 이미지 편집하기 with open cv
 
