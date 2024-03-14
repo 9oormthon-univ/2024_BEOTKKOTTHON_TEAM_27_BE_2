@@ -21,7 +21,7 @@ def create_prompt_image(request: PostingImageRequest):
                         {request.promotion.channel} 홍보 글을 올리고 싶어. \
                         '{request.promotion.content}'를 강조해서 홍보하고 싶어. \
                         예시: 숙대 앞 매운 닭발의 환상! 20대 남성의 입맛을 사로잡는 최고 맛집! #엽기떡볶이 #매운닭발 #숙명여대 \
-                        요청: 정보와 예시를 바탕으로 카피라이터을 1개 작성해줘! 40자를 넘기지마. \
+                        요청: 정보와 예시를 바탕으로 카피라이터을 1개 작성해줘! 40자를 넘기지마. 짧은 글이야. 명심해. \
                         카피라이터:"
     return prompt_message
 

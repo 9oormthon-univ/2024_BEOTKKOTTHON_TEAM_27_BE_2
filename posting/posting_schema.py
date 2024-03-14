@@ -1,29 +1,34 @@
 from pydantic import BaseModel
 
+
 class Store(BaseModel):
     name: str
     address: str
 
+
 class Promotion(BaseModel):
-    type: str
+    category: str
     channel: str
     target: str
     subject: str
     content: str
 
+
 class PostingTextRequest(BaseModel):
     # store
-    store: Store
+    store: Store | None = None
     # promotion
-    promotion: Promotion
+    promotion: Promotion | None = None
+
 
 class PostingImageRequest(BaseModel):
     # store
-    store: Store
+    store: Store | None = None
     # promotion
-    promotion: Promotion
+    promotion: Promotion | None = None
     # image
     image_url: str
+
 
 class PostingResponse(BaseModel):
     promotion_text: str
