@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 import config
 import requests
 
@@ -22,12 +22,9 @@ def generate_posting_text(request: PostingTextRequest):
 
 @router.post("/image", status_code=200)
 def generate_posting_image(request: PostingImageRequest):
-    if request.has_image == True:
-        prompt_message = posting_crud.create_prompt_image(request)
-        kogpt_response = request_kogpt(prompt_message)
-        new_image_url = posting_crud.create_image(request.image_url, kogpt_response['text'])
-    else:
-        raise HTTPException(status_code=404, detail="Invalid Access")
+    prompt_message = posting_crud.create_prompt_image(request)
+    kogpt_response = request_kogpt(prompt_message)
+    new_image_url = posting_crud.create_image(request.image_url, kogpt_response['text'])
 
     return {
         "new_image_url": new_image_url
