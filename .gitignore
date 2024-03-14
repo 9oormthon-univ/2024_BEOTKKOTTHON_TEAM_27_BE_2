@@ -54,3 +54,4 @@ alembic.ini
 
 # secret
 kogpt/.env
+posting/.env
