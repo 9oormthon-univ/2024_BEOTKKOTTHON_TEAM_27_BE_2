@@ -1,6 +1,7 @@
 ### 실행 방법
 ```
-gptvenv/bin/uvicorn main:app
+source gpt_venv/bin/activate
+gpt_venv/bin/uvicorn main:app
 ```
 
 ### ChatGPT
