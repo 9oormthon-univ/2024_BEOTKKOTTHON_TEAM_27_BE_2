@@ -1,19 +1,21 @@
 from fastapi import APIRouter, HTTPException
-import config
 import requests
 import json
 
-from kogpt_schema import KoGPTRequest
+from .kogpt_schema import KoGPTRequest
+from starlette.config import Config
+
+config = Config('.env')
+
+REST_API_KEY = config('REST_API_KEY')
+MAX_TOKENS = int(config('MAX_TOKENS'))
+TEMPERATURE = float(config('TEMPERATURE'))
+TOP_P = float(config('TOP_P'))
+N = int(config('N'))
 
 router = APIRouter(
-    prefix="/api/kogpt",
+    prefix="/api/gpt/kogpt",
 )
-
-REST_API_KEY = config.REST_API_KEY
-MAX_TOKENS = int(config.MAX_TOKENS)
-TEMPERATURE = float(config.TEMPERATURE)
-TOP_P = float(config.TOP_P)
-N = int(config.N)
 
 @router.post("/result")
 def get_result(request: KoGPTRequest):

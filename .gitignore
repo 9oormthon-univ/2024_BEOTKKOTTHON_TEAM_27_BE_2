@@ -51,6 +51,3 @@ myapi.db
 *.pyc
 migrations
 alembic.ini
-
-# secret
-kogpt/.env
