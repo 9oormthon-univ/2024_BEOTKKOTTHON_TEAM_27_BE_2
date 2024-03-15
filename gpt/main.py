@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from kogpt.kogpt_router import router as kogpt_router
-from chatgpt.chatgpt_router import router as chatgpt_router
+from kogpt import kogpt_router
+from chatgpt import chatgpt_router
 
 app = FastAPI()
 
@@ -18,8 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(kogpt_router)
-app.include_router(chatgpt_router)
+app.include_router(kogpt_router.router)
+app.include_router(chatgpt_router.router)
 
 
 @app.get("/hello")
