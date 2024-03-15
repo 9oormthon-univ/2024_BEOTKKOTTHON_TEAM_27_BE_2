@@ -1,5 +1,5 @@
 import requests
-import kogpt.config as config
+import gpt.kogpt.config as config
 import json
 
 REST_API_KEY = config.REST_API_KEY

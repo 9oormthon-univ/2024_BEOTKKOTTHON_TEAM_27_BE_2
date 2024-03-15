@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException
-import config
 import requests
 import json
+import os
 
-from kogpt_schema import KoGPTRequest
+from .kogpt_schema import KoGPTRequest
 
 router = APIRouter(
-    prefix="/api/kogpt",
+    prefix="/api/gpt/kogpt",
 )
 
 REST_API_KEY = config.REST_API_KEY
