@@ -9,7 +9,7 @@ OPENAI_KEY = config('OPENAI_KEY')
 MODEL = "gpt-3.5-turbo"
 
 client = OpenAI(
-  api_key=OPENAI_KEY,  # this is also the default, it can be omitted
+  api_key=OPENAI_KEY,
 )
 router = APIRouter(
     prefix="/api/gpt/chatgpt",
