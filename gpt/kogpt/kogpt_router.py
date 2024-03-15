@@ -17,7 +17,7 @@ router = APIRouter(
     prefix="/api/gpt/kogpt",
 )
 
-@router.post("/result")
+@router.post("")
 def get_result(request: KoGPTRequest):
     r = requests.post(
         'https://api.kakaobrain.com/v1/inference/kogpt/generation',
