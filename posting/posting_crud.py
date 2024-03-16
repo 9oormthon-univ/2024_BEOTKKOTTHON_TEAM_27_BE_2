@@ -1,4 +1,8 @@
+from PIL import Image
+from io import BytesIO
+
 from posting_schema import PostingTextRequest, PostingImageRequest
+from edit_image import put_text_on_image
 
 
 def create_prompt_text(request: PostingTextRequest):
@@ -27,11 +31,12 @@ def create_prompt_image(request: PostingImageRequest):
 
 
 def create_image(image_url: str, text: str):
-    # 버킷 접근해서 이미지 가져오기
-    # image = Image.open(image_url)
+    image = Image.open(image_url)
+    new_image = put_text_on_image(image, text, "MaruBuri-Bold.ttf", 150, "black")
 
-    # 이미지 편집하기 with open cv
+    buffer = BytesIO()
+    new_image.save(buffer, format="JPEG")
 
-    # 이미지 버킷에 저장하기 => new image url
+    # new_image 이미지 버킷에 저장하기
     new_image_url = "url"
     return new_image_url
