@@ -2,10 +2,10 @@ from fastapi import APIRouter, HTTPException
 import requests
 import json
 
-from .kogpt_schema import KoGPTRequest
+from kogpt.kogpt_schema import KoGPTRequest
 from starlette.config import Config
 
-config = Config('.env')
+config = Config('kogpt/.env')
 
 REST_API_KEY = config('REST_API_KEY')
 MAX_TOKENS = int(config('MAX_TOKENS'))

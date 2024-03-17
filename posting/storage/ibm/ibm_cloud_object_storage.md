@@ -1,5 +1,6 @@
 ## IBM Cloud Object Storage ☁️
 ### IBM Cloud Object Storage S3 API 정보
+(https://cloud.ibm.com/apidocs/cos/cos-compatibility)  
 - 오브젝트를 읽고 쓰기 위한 REST기반 API이다.
 - 오브젝트 오퍼레이션
   - DELETE: 버킷에서 오브젝트를 삭제한다.

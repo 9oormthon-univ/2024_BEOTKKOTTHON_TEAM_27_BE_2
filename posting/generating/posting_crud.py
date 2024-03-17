@@ -3,6 +3,7 @@ from io import BytesIO
 
 from generating.posting_schema import PostingTextRequest, PostingImageRequest
 from editing.edit_image import put_text_on_image
+from storage.ibm.s3 import upload_file_to_ibm, get_file_content
 
 
 def create_prompt_text(request: PostingTextRequest):
@@ -25,19 +26,18 @@ def create_prompt_image(request: PostingImageRequest):
                         {request.promotion.channel} 홍보 글을 올리고 싶어. \
                         '{request.promotion.content}'를 강조해서 홍보하고 싶어. \
                         예시: 숙대 앞 매운 닭발의 환상! 20대 남성의 입맛을 사로잡는 최고 맛집! #엽기떡볶이 #매운닭발 #숙명여대 \
-                        요청: 정보와 예시를 바탕으로 카피라이터을 1개 작성해줘! 40자를 넘기지마. 짧은 글이야. 명심해. \
+                        요청: 정보와 예시를 바탕으 카피라이터을 1개 작성해줘! 40자를 넘기지마. 짧은 글이야. 명심해. \
                         카피라이터:"
     return prompt_message
 
 
-def create_image(image_url: str, text: str):
-    image = Image.open(image_url)
-    new_image = put_text_on_image(image, text, "MaruBuri-Bold.ttf", 150, "black")
+def create_image(file_name: str, text: str):
+    image_data = get_file_content(file_name)
+
+    image = Image.open(BytesIO(image_data))
+    new_image = put_text_on_image(image, text, "../font/MaruBuri-Bold.ttf", 150, "black")
 
     buffer = BytesIO()
     new_image.save(buffer, format="JPEG")
-    # 이미지 ibm에 업로드하는 코드 추가
-
-    # new_image 이미지 버킷에 저장하기
-    new_image_url = "url"
-    return new_image_url
+    new_file_name = upload_file_to_ibm(file_name, buffer.getvalue())
+    return new_file_name
