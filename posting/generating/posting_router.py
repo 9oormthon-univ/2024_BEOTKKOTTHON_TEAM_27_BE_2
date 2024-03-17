@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 import config
 import requests
 
-from posting_schema import PostingTextRequest, PostingImageRequest
-import posting_crud
+from generating.posting_schema import PostingTextRequest, PostingImageRequest
+import generating.posting_crud as posting_crud
 
 router = APIRouter(
     prefix="/api/posting",

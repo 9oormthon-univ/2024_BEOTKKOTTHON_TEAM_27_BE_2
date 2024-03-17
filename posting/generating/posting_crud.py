@@ -1,8 +1,8 @@
 from PIL import Image
 from io import BytesIO
 
-from posting_schema import PostingTextRequest, PostingImageRequest
-from edit_image import put_text_on_image
+from generating.posting_schema import PostingTextRequest, PostingImageRequest
+from editing.edit_image import put_text_on_image
 
 
 def create_prompt_text(request: PostingTextRequest):
@@ -36,6 +36,7 @@ def create_image(image_url: str, text: str):
 
     buffer = BytesIO()
     new_image.save(buffer, format="JPEG")
+    # 이미지 ibm에 업로드하는 코드 추가
 
     # new_image 이미지 버킷에 저장하기
     new_image_url = "url"
