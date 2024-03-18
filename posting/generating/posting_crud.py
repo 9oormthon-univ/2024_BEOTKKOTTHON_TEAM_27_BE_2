@@ -2,12 +2,11 @@ from pillow_heif import register_heif_opener
 from PIL import Image
 from io import BytesIO
 import requests
+import config
 
 from generating.posting_schema import PostingTextRequest, PostingImageRequest
 from editing.edit_image import put_text_on_image
 
-BASEURL = 'http://localhost:'
-STORAGE_PORT = '8082'
 
 def create_prompt_text(request: PostingTextRequest):
     prompt_message = f"정보: 나는 <{request.store.name}>를 운영하고 있는 사장이야. \
@@ -53,7 +52,7 @@ def create_image(file_name: str, text: str):
 
 
 def get_ibm_object(file_name: str, file_extension: str):
-    url = BASEURL + STORAGE_PORT + '/api/storage/ibm/object/' + file_name + '/' + file_extension
+    url = config.BASEURL + config.STORAGE_PORT + '/api/ibm/object/' + file_name + '/' + file_extension
     response = requests.get(url)
     if response.status_code == 200:
         image_data = BytesIO(response.content)
@@ -61,7 +60,7 @@ def get_ibm_object(file_name: str, file_extension: str):
 
 
 def put_ibm_object(file_content: bytes, file_extension: str):
-    url = BASEURL + STORAGE_PORT + '/api/storage/ibm/object'
+    url = config.BASEURL + config.STORAGE_PORT + '/api/ibm/object'
     files = {'file_content': ('filename', file_content, 'application/octet-stream')}
     params = {'file_extension': file_extension}
     response = requests.put(url, files=files, params=params)
