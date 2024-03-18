@@ -3,7 +3,6 @@ from io import BytesIO
 
 from generating.posting_schema import PostingTextRequest, PostingImageRequest
 from editing.edit_image import put_text_on_image
-from storage.ibm.s3 import upload_file_to_ibm, get_file_content
 
 
 def create_prompt_text(request: PostingTextRequest):
@@ -41,3 +40,5 @@ def create_image(file_name: str, text: str):
     new_image.save(buffer, format="JPEG")
     new_file_name = upload_file_to_ibm(file_name, buffer.getvalue())
     return new_file_name
+
+def get_file_content(file_name: str):
