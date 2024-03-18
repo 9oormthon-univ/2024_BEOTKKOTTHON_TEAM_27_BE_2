@@ -1,7 +1,7 @@
 ### 실행 방법
 ```
-source gpt_venv/bin/activate
-gpt_venv/bin/uvicorn main:app
+cd gpt
+uvicorn main:app --port=8000
 ```
 
 ### ChatGPT
