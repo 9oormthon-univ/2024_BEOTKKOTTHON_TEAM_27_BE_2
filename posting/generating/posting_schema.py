@@ -7,11 +7,12 @@ class Store(BaseModel):
 
 
 class Promotion(BaseModel):
-    category: str
     channel: str
-    target: str
+    type: str
     subject: str
     content: str
+    targetGender: str
+    targetAge: str
 
 
 class PostingTextRequest(BaseModel):
