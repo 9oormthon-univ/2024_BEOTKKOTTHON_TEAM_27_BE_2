@@ -15,9 +15,9 @@ def get_token():
     }
 
 
-@router.get("/object")
-def get_ibm_object(file_name: str):
-    file: bytes | None = get_file_content(file_name)
+@router.get("/object/{file_name}/{file_extension}")
+def get_ibm_object(file_name: str, file_extension: str):
+    file: bytes | None = get_file_content(file_name + '.' + file_extension)
     return Response(content=file, media_type="application/octet-stream", headers={"Content-Disposition": f"attachment; filename={file_name}"})
 
 
