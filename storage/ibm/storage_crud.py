@@ -1,34 +1,48 @@
 import requests
-import os
 import config
 import uuid
+from datetime import datetime, timedelta
 from fastapi import HTTPException
 
 IBM_CLOUD_URL = 'https://s3.us-south.cloud-object-storage.appdomain.cloud'
 IBM_TOKEN_URL = 'https://iam.cloud.ibm.com/identity/token'
 BUCKET_NAME = 'image-with-copywriter'
 
+IBM_TOKEN = 'null'
+IBM_TOKEN_CREATED_TIME = datetime.utcnow() - timedelta(hours=2)
+
 
 def get_ibm_token(api_key):
-    url = IBM_TOKEN_URL
-    headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-    data = {
-        'grant_type': 'urn:ibm:params:oauth:grant-type:apikey',
-        'apikey': api_key
-    }
+    global IBM_TOKEN, IBM_TOKEN_CREATED_TIME
 
-    response = requests.post(url, headers=headers, data=data)
+    print(IBM_TOKEN)
+    print(IBM_TOKEN_CREATED_TIME)
 
-    ibm_token = ''
-    if response.status_code == 200:
-        ibm_token = response.json()['access_token']
-        print("토큰을 성공적으로 받았습니다")
-    else:
-        print("토큰 요청 실패:", response.status_code)
+    if IBM_TOKEN == 'null' or IBM_TOKEN_CREATED_TIME + timedelta(minutes=59) < datetime.utcnow():
+        url = IBM_TOKEN_URL
+        headers = {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+        data = {
+            'grant_type': 'urn:ibm:params:oauth:grant-type:apikey',
+            'apikey': api_key
+        }
 
-    return ibm_token
+        response = requests.post(url, headers=headers, data=data)
+
+        if response.status_code == 200:
+            update_ibm_token(response.json()['access_token'])
+            print("토큰을 성공적으로 받았습니다")
+        else:
+            print("토큰 요청 실패:", response.status_code)
+
+    return IBM_TOKEN
+
+
+def update_ibm_token(ibm_token: str):
+    global IBM_TOKEN, IBM_TOKEN_CREATED_TIME
+    IBM_TOKEN = ibm_token
+    IBM_TOKEN_CREATED_TIME = datetime.utcnow()
 
 
 def get_file_content(file_name):

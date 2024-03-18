@@ -21,7 +21,6 @@ def get_ibm_object(file_name: str):
     return Response(content=file, media_type="application/octet-stream", headers={"Content-Disposition": f"attachment; filename={file_name}"})
 
 
-
 @router.put("/object")
 def put_ibm_object(file_content: UploadFile, file_extension: str):
     file_name = upload_file_to_ibm(file_content.file.read(), file_extension)
