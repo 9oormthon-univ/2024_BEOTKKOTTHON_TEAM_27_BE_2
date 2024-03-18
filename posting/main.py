@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import posting_router
+from generating import posting_router
 
 app = FastAPI()
 
