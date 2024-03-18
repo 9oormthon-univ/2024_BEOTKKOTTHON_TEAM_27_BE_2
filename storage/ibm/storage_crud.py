@@ -63,6 +63,8 @@ def get_content_type(file_extension: str):
         return 'image/jpeg'
     elif file_extension == '.png':
         return 'image/png'
+    elif file_extension == '.heic':
+        return 'image/heic'
     else:
         raise HTTPException(status_code=400, detail="지원하지 않는 파일 형식입니다.")
 
