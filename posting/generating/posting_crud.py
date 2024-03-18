@@ -34,10 +34,14 @@ def create_prompt_image(request: PostingImageRequest):
 
 
 def create_image(file_name: str, text: str):
-    image_data = get_ibm_object(file_name)
+    image_data = get_ibm_object(file_name.split('.')[0], '.' + file_name.split('.')[1])
 
     image = Image.open(image_data)
     new_image = put_text_on_image(image, text, "../font/MaruBuri-Bold.ttf", 150, "black")
+
+    # 이미지를 RGB 모드로 변환
+    if new_image.mode == 'RGBA':
+        new_image = new_image.convert('RGB')
 
     buffer = BytesIO()
     new_image.save(buffer, format="JPEG")

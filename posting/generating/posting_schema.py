@@ -27,7 +27,7 @@ class PostingImageRequest(BaseModel):
     # promotion
     promotion: Promotion | None = None
     # image
-    image_url: str
+    file_name: str
 
 
 class PostingResponse(BaseModel):
