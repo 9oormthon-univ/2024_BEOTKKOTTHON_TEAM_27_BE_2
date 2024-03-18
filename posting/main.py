@@ -18,8 +18,3 @@ app.add_middleware(
 )
 
 app.include_router(posting_router.router)
-
-
-@app.get("/posting")
-def hello():
-    return {"message": "안녕하세요"}
