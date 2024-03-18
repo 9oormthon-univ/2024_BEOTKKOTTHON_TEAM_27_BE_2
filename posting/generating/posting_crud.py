@@ -39,7 +39,6 @@ def create_image(file_name: str, text: str):
     image = Image.open(image_data)
     new_image = put_text_on_image(image, text, "../font/MaruBuri-Bold.ttf", 150, "black")
 
-    # 이미지를 RGB 모드로 변환
     if new_image.mode == 'RGBA':
         new_image = new_image.convert('RGB')
 
