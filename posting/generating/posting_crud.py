@@ -1,10 +1,12 @@
 from PIL import Image
 from io import BytesIO
+import requests
 
 from generating.posting_schema import PostingTextRequest, PostingImageRequest
 from editing.edit_image import put_text_on_image
-from storage.ibm.s3 import upload_file_to_ibm, get_file_content
 
+BASEURL = 'http://localhost:'
+STORAGE_PORT = '8082'
 
 def create_prompt_text(request: PostingTextRequest):
     prompt_message = f"정보: 나는 <{request.store.name}>를 운영하고 있는 사장이야. \
@@ -32,12 +34,36 @@ def create_prompt_image(request: PostingImageRequest):
 
 
 def create_image(file_name: str, text: str):
-    image_data = get_file_content(file_name)
+    image_data = get_ibm_object(file_name.split('.')[0], '.' + file_name.split('.')[1])
 
-    image = Image.open(BytesIO(image_data))
+    image = Image.open(image_data)
     new_image = put_text_on_image(image, text, "../font/MaruBuri-Bold.ttf", 150, "black")
+
+    if new_image.mode == 'RGBA':
+        new_image = new_image.convert('RGB')
 
     buffer = BytesIO()
     new_image.save(buffer, format="JPEG")
-    new_file_name = upload_file_to_ibm(file_name, buffer.getvalue())
+    new_file_name = put_ibm_object(buffer.getvalue(), '.jpeg')
     return new_file_name
+
+
+def get_ibm_object(file_name: str, file_extension: str):
+    url = BASEURL + STORAGE_PORT + '/api/storage/ibm/object/' + file_name + '/' + file_extension
+    response = requests.get(url)
+    if response.status_code == 200:
+        image_data = BytesIO(response.content)
+        return image_data
+
+
+def put_ibm_object(file_content: bytes, file_extension: str):
+    url = BASEURL + STORAGE_PORT + '/api/storage/ibm/object'
+    files = {'file_content': ('filename', file_content, 'application/octet-stream')}
+    params = {'file_extension': file_extension}
+    response = requests.put(url, files=files, params=params)
+    if response.status_code == 200:
+        print("파일 업로드 성공")
+    else:
+        print(f"파일 업로드 실패: {response.status_code}")
+
+    return response.json()['file_name']
