@@ -29,7 +29,7 @@ def generate_posting_text(request: PostingTextRequest):
 def generate_posting_image(request: PostingImageRequest):
     prompt_message = posting_crud.create_prompt_image(request)
     kogpt_response = request_gpt(GPT_PORT, CHATGPT_API, prompt_message)
-    new_image_url = posting_crud.create_image(request.file_name, kogpt_response['text'])
+    new_image_url = posting_crud.create_image(request.file_name, request.promotion.subject, kogpt_response['text'])
 
     return {
         "new_image_url": new_image_url,

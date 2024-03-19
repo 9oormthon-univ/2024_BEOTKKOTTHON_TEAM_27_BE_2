@@ -28,19 +28,19 @@ def create_prompt_image(request: PostingImageRequest):
                         {request.promotion.channel} 홍보 글을 올리고 싶어. \
                         '{request.promotion.content}'를 강조해서 홍보하고 싶어. \
                         예시: 숙대 앞 매운 닭발의 환상! 20대 남성의 입맛을 사로잡는 최고 맛집! #엽기떡볶이 #매운닭발 #숙명여대 \
-                        요청: 정보와 예시를 바탕으 카피라이터을 1개 작성해줘! 40자를 넘기지마. 짧은 글이야. 명심해. \
+                        요청: 정보와 예시를 바탕으 카피라이터을 1개 작성해줘! 30자를 넘기지마. 짧은 글이야. 명심해. \
                         카피라이터:"
     return prompt_message
 
 
-def create_image(file_name: str, text: str):
+def create_image(file_name: str, subject: str, text: str):
     image_data = get_ibm_object(file_name.split('.')[0], '.' + file_name.split('.')[1])
 
     if file_name.split('.')[1] == 'heic':
         register_heif_opener()
     image = Image.open(image_data)
 
-    new_image = put_text_on_image(image, text, "../font/MaruBuri-Bold.ttf", 150, "black")
+    new_image = put_text_on_image(image, subject, text, "../font/MaruBuri-Bold.ttf", 150, "black")
 
     if new_image.mode == 'RGBA':
         new_image = new_image.convert('RGB')
