@@ -20,8 +20,3 @@ app.add_middleware(
 
 app.include_router(kogpt_router.router)
 app.include_router(chatgpt_router.router)
-
-
-@app.get("/hello")
-def hello():
-    return {"message": "안녕하세요"}

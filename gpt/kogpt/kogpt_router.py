@@ -59,7 +59,6 @@ def get_result(request: KoGPTRequest):
 
     if r.status_code == 200:
         return {
-            "id": response["id"],
             "text": response["generations"][0]["text"]
         }
     else:

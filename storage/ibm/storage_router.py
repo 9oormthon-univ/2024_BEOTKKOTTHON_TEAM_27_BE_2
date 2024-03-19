@@ -3,7 +3,7 @@ from fastapi import APIRouter, Response, UploadFile
 from ibm.storage_crud import *
 
 router = APIRouter(
-    prefix="/api/storage/ibm",
+    prefix="/api/ibm",
 )
 
 
