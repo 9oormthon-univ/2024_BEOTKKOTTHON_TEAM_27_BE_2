@@ -5,7 +5,8 @@ from ibm import storage_router
 app = FastAPI()
 
 origins = [
-    "http://localhost:8000"
+    # "http://localhost:8000"
+    "*"
 ]
 
 app.add_middleware(

@@ -7,7 +7,8 @@ from chatgpt import chatgpt_router
 app = FastAPI()
 
 origins = [
-    "http://localhost:8001"
+    # "http://localhost:8001"
+    "*"
 ]
 
 app.add_middleware(
