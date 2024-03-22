@@ -30,6 +30,10 @@ def get_result(request: ChatGPTRequest):
         "model": "gpt-3.5-turbo",
         "messages": [
             {
+                "role": "system",
+                "content": request.system_prompt
+            },
+            {
                 "role": "user",
                 "content": request.content
             }
