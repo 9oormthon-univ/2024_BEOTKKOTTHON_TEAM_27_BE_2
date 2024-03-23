@@ -58,10 +58,15 @@ uvicorn main:app --reload --port=8002
 | **Communication**   | Discord, Notion              |
 
 ### 🖇️ API 명세서
+<img width="908" alt="image" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_27_BE_2/assets/62923434/f1ac7d65-c7c6-4c9d-82e7-3504221b4e7a">
+
+<img width="904" alt="image" src="https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_27_BE_2/assets/62923434/a3a8df38-3b89-441b-be17-8121e98b99d3">
 
 
 ### ⚙️ 인프라
-(찬호님이 만드는 중)
+![image](https://github.com/goormthon-Univ/2024_BEOTKKOTTHON_TEAM_27_BE_2/assets/62923434/778a16cc-0bf9-4d0b-b77e-6cf146f33199)
+
+
 
 
 ### 🧚🏻 팀원 소개
