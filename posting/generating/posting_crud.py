@@ -3,10 +3,12 @@ from PIL import Image
 from io import BytesIO
 import requests
 import config
+import random
 
 from generating.posting_schema import PostingTextRequest, PostingImageRequest
 from editing.edit_image import put_text_on_image
 
+font_list = ['WAGURI-TTF.ttf', 'DNFBitBitv2.ttf', 'goryung-strawberry.ttf', 'SDSamliphopangcheTTFOutline.ttf', 'Jalnan2TTF.ttf', 'KakaoBold.ttf']
 
 def get_system_prompt(request_type: str):
     text_sys_prompt = '''당신은 SNS 마케팅 담당자입니다.
@@ -72,7 +74,8 @@ def create_image(file_name: str, subject: str, text: str):
         register_heif_opener()
     image = Image.open(image_data)
 
-    new_image = put_text_on_image(image, subject, text, "font/HakgyoansimJiugaeR.ttf", "white")
+    # new_image = put_text_on_image(image, subject, text, "font/" + random.choice(font_list), "white")
+    new_image = put_text_on_image(image, subject, text, "font/SDSamliphopangcheTTFOutline.ttf", "white", "editing/logo/logo4.png", (130, 90))
 
     if new_image.mode == 'RGBA':
         new_image = new_image.convert('RGB')
