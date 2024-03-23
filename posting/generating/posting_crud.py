@@ -17,7 +17,7 @@ def get_system_prompt(type: str):
                 '가게 이름', '가게 주소', '홍보 주제', '홍보 채널', '홍보 대상', '강조할 내용'을 보고 자연스러운 홍보글을 센스있게 작성해주세요. 단 홍보 대상은 글에 절대 포함하지 말고, 글 스타일을 결정할 때만 참고해주세요..'''
     elif type == 'image':
         return '''당신은 SNS 마케팅 담당자입니다.
-                '가게 이름', '가게 주소', '홍보 주제', '홍보 채널', '홍보 대상', '강조할 내용'을 보고 자연스러운 해시태그 3개를 작성해주세요.
+                '홍보 주제', '강조할 내용'을 보고 자연스러운 해시태그 3개를 작성해주세요.
         '''
 
 def create_prompt_text(request: PostingTextRequest):
@@ -43,19 +43,11 @@ def get_prompt_example(promotion_channel: str):
 
 def create_prompt_image(request: PostingImageRequest):
     prompt_message_primary = ('''[예시]
-                                가게 이름: 마라탕 숙명여대점
-                                가게 주소: 서울특별시 용산구
                                 홍보 주제: 꿔바로우
-                                홍보 채널: 인스타그램
-                                홍보 대상: 20대 남성, 20대 여성
-                                강조할 내용: 바삭함
-                                해시태그: #바삭바삭 #20대맛집 #인스타푸드
+                                강조할 내용: 바삭함, 부드러움
+                                해시태그: #바삭바삭 #부드러운 #고소한
                                 ''')
-    prompt_message = (f"가게 이름: {request.store.name} \
-                    가게 주소: {request.store.address} \
-                    홍보 주제: {request.promotion.subject} \
-                    홍보 채널: {request.promotion.channel} \
-                    홍보 대상: {request.promotion.targetAge} + {request.promotion.targetGender} \
+    prompt_message = (f"홍보 주제: {request.promotion.subject} \
                     강조할 내용: {request.promotion.content} \
                     해시태그: ")
     return prompt_message_primary + prompt_message
