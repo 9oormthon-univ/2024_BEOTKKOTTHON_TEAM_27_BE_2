@@ -18,7 +18,7 @@ CHATGPT_API = config.CHATGPT_API
 
 @router.post("/text", status_code=200)
 def generate_posting_text(request: PostingTextRequest):
-    system_prompt = get_system_prompt()
+    system_prompt = get_system_prompt("text")
     prompt_message = posting_crud.create_prompt_text(request)
     kogpt_response = request_gpt(GPT_PORT, CHATGPT_API, system_prompt, prompt_message)
 
@@ -29,7 +29,7 @@ def generate_posting_text(request: PostingTextRequest):
 
 @router.post("/image", status_code=200)
 def generate_posting_image(request: PostingImageRequest):
-    system_prompt = get_system_prompt()
+    system_prompt = get_system_prompt("image")
     prompt_message = posting_crud.create_prompt_image(request)
     kogpt_response = request_gpt(GPT_PORT, CHATGPT_API, system_prompt, prompt_message)
     new_image_url = posting_crud.create_image(request.file_name, request.promotion.subject, kogpt_response['text'])
