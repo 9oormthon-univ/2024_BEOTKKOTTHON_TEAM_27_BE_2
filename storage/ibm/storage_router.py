@@ -6,7 +6,6 @@ router = APIRouter(
     prefix="/api/ibm",
 )
 
-
 @router.get("/token")
 def get_token():
     ibm_token = get_ibm_token(config.IBM_API_KEY)
