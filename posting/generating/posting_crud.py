@@ -42,23 +42,15 @@ def get_prompt_example(promotion_channel: str):
 
 
 def create_prompt_image(request: PostingImageRequest):
-    prompt_message_primary = ('''[예시]
-                                가게 이름: 마라탕 숙명여대점
-                                가게 주소: 서울특별시 용산구
-                                홍보 주제: 꿔바로우
-                                홍보 채널: 인스타그램
-                                홍보 대상: 20대 남성, 20대 여성
-                                강조할 내용: 바삭함
-                                해시태그: #바삭바삭 #20대맛집 #인스타푸드
-                                ''')
-    prompt_message = (f"가게 이름: {request.store.name} \
+    prompt_message = (f'''가게 이름: {request.store.name} \
                     가게 주소: {request.store.address} \
                     홍보 주제: {request.promotion.subject} \
                     홍보 채널: {request.promotion.channel} \
                     홍보 대상: {request.promotion.targetAge} + {request.promotion.targetGender} \
                     강조할 내용: {request.promotion.content} \
-                    해시태그: ")
-    return prompt_message_primary + prompt_message
+                    
+                    이 가게를 홍보할 수 있는 해시태그 3개 만들어줘!! 다 합쳐서 20자를 넘기지마!''')
+    return prompt_message
 
 
 def create_image(file_name: str, subject: str, text: str):

@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 
 from editing.image_size import resize_image
 from editing.add_logo import add_logo_to_image
+# from image_size import resize_image
+# from add_logo import add_logo_to_image
 
 
 class custom_stroke:
@@ -85,7 +87,7 @@ def adjust_font_size(custom_font: custom_font, text: str, text_width: int, image
 
 
 if __name__ == "__main__":
-    new_image = put_text_on_image(Image.open("image/mara.jpeg"), "가나다라마바사아자", "#마라킹 #용산구핫플 #가나다라마바사아자차", "../font/SDSamliphopangcheTTFOutline.ttf", "white", "logo/logo4.png", (130, 90))
+    new_image = put_text_on_image(Image.open("image/mara.jpeg"), "가나다라마바사아자", "#마라킹 #용산구핫플 #가나다라마바사아자차카타파하광인효연숙경영", "../font/SDSamliphopangcheTTFOutline.ttf", "white", "logo/logo4.png", (130, 90))
     new_image.save("output_image.jpg")
     plt.imshow(new_image)
     plt.axis('off')
