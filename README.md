@@ -21,7 +21,7 @@ uvicorn main:app --reload --port=8002
   - 이미지를 편집하는 라이브러리인 Pillow를 사용하기 위해서 파이썬 언어의 서버 필요
   - Spring과 FastAPI의 장점 극대화
   - 개발 및 유지 보수의 강점
-![img.png](img.png)
+![img.png](assets/image/img.png)
 
 - **최적의 GPT 프롬프터 실험**
   - 타겟, SNS 채널 혹은 결과 타입에 따른 프롬프터 분리
@@ -37,7 +37,7 @@ uvicorn main:app --reload --port=8002
 
 | 기능 구현 전 | 기능 구현 후 |
 |---------|---------|
-|  ![img_2.png](img_2.png)  |   ![img_1.png](img_1.png)      |
+|  ![img_2.png](assets/image/img_2.png)  |   ![img_1.png](assets/image/img_1.png)      |
 
   - 글자 크기에 따른 글자 위치 자동 조절
   - 이미지의 우측 상단에 로고 삽입

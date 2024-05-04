@@ -15,9 +15,6 @@ IBM_TOKEN_CREATED_TIME = datetime.utcnow() - timedelta(hours=2)
 def get_ibm_token(api_key):
     global IBM_TOKEN, IBM_TOKEN_CREATED_TIME
 
-    # print(IBM_TOKEN)
-    # print(IBM_TOKEN_CREATED_TIME)
-
     if IBM_TOKEN == 'null' or IBM_TOKEN_CREATED_TIME + timedelta(minutes=59) < datetime.utcnow():
         url = IBM_TOKEN_URL
         headers = {
