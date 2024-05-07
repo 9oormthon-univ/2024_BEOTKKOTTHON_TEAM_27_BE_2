@@ -1,4 +1,3 @@
-from pillow_heif import register_heif_opener
 from PIL import Image
 from io import BytesIO
 import requests
@@ -52,8 +51,6 @@ def create_prompt_image(request: PostingImageRequest):
 def create_image(file_name: str, subject: str, text: str):
     image_data = get_ibm_object(file_name.split('.')[0], '.' + file_name.split('.')[1])
 
-    if file_name.split('.')[1] == 'heic':
-        register_heif_opener()
     image = Image.open(image_data)
 
     # new_image = put_text_on_image(image, subject, text, "font/" + random.choice(font_list), "white")
