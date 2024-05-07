@@ -4,10 +4,6 @@ import uuid
 from datetime import datetime, timedelta
 from fastapi import HTTPException
 
-IBM_CLOUD_URL = 'https://s3.us-south.cloud-object-storage.appdomain.cloud'
-IBM_TOKEN_URL = 'https://iam.cloud.ibm.com/identity/token'
-BUCKET_NAME = 'image-with-copywriter'
-
 IBM_TOKEN = 'null'
 IBM_TOKEN_CREATED_TIME = datetime.utcnow() - timedelta(hours=2)
 
@@ -16,7 +12,7 @@ def get_ibm_token(api_key):
     global IBM_TOKEN, IBM_TOKEN_CREATED_TIME
 
     if IBM_TOKEN == 'null' or IBM_TOKEN_CREATED_TIME + timedelta(minutes=59) < datetime.utcnow():
-        url = IBM_TOKEN_URL
+        url = config.IBM_TOKEN_URL
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -43,7 +39,7 @@ def update_ibm_token(ibm_token: str):
 
 
 def get_file_content(file_name):
-    url = IBM_CLOUD_URL + '/' + BUCKET_NAME + '/' + file_name
+    url = config.IBM_CLOUD_URL + '/' + config.BUCKET_NAME + '/' + file_name
     headers = {
         'Authorization': 'Bearer ' + get_ibm_token(config.IBM_API_KEY),
     }
@@ -68,7 +64,7 @@ def get_content_type(file_extension: str):
 
 def upload_file_to_ibm(file_content: bytes, file_extension: str):
     file_name = str(uuid.uuid4()) + file_extension
-    url = IBM_CLOUD_URL + '/' + BUCKET_NAME + '/' + file_name
+    url = config.IBM_CLOUD_URL + '/' + config.BUCKET_NAME + '/' + file_name
     headers = {
         'Authorization': 'Bearer ' + get_ibm_token(config.IBM_API_KEY),
         'Content-Type': get_content_type(file_extension)
