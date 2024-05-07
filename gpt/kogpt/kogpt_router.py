@@ -1,15 +1,9 @@
 from fastapi import APIRouter, HTTPException
 import requests
 import json
-import os
+from kogpt.config import *
 
 from kogpt.kogpt_schema import KoGPTRequest
-
-REST_API_KEY = os.environ.get('REST_API_KEY')
-MAX_TOKENS = int(os.environ.get('MAX_TOKENS'))
-TEMPERATURE = float(os.environ.get('TEMPERATURE'))
-TOP_P = float(os.environ.get('TOP_P'))
-N = int(os.environ.get('N'))
 
 router = APIRouter(
     prefix="/api/gpt/kogpt",
@@ -51,9 +45,6 @@ def get_result(request: KoGPTRequest):
             "total_tokens": int # 총 토큰 수
         }
     '''
-
-    # print(response["id"])
-    # print(response["generations"][0]["text"])
 
     if r.status_code == 200:
         return {

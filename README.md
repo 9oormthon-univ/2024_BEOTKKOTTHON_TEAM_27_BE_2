@@ -18,41 +18,40 @@ uvicorn main:app --reload --port=8002
 ### 🐳 CI/CD 파이프라임
 - 도커 이미지 빌드
 ```
-docker build -t gpt-image:latest . -f gpt.Dockerfile
-docker build -t posting-image:latest . -f posting.Dockerfile
-docker build -t storage-image:latest . -f storage.Dockerfile
+docker build \
+    --build-arg REST_API_KEY="$REST_API_KEY" \
+    --build-arg MAX_TOKENS="$MAX_TOKENS" \
+    --build-arg TEMPERATURE="$TEMPERATURE" \
+    --build-arg TOP_P="$TOP_P" \
+    --build-arg N="$N" \
+    -t gpt-image:latest \
+    -f gpt.Dockerfile .
 
-docker run \
-    -p 8000:8000 \
-    -e REST_API_KEY="$REST_API_KEY" \
-    -e MAX_TOKENS="$MAX_TOKENS" \
-    -e TEMPERATURE="$TEMPERATURE" \
-    -e TOP_P="$TOP_P" \
-    -e N="$N" \
-    -e OPENAI_KEY="$OPENAI_KEY" \
-    gpt-image:latest
+docker build \
+    --build-arg BASE_URL="$BASE_URL" \
+    --build-arg GPT_PORT="$GPT_PORT" \
+    --build-arg POSTING_PORT="$POSTING_PORT" \
+    --build-arg STORAGE_PORT="$STORAGE_PORT" \
+    --build-arg KOGPT_API="$KOGPT_API" \
+    --build-arg CHATGPT_API="$CHATGPT_API" \
+    -t posting-image:latest \
+    -f posting.Dockerfile .
+  
+docker build \
+    --build-arg BASE_URL="$BASE_URL" \
+    --build-arg GPT_PORT="$GPT_PORT" \
+    --build-arg POSTING_PORT="$POSTING_PORT" \
+    --build-arg STORAGE_PORT="$STORAGE_PORT" \
+    --build-arg IBM_API_KEY="${IBM_API_KEY}" \
+    --build-arg IBM_CLOUD_URL="${IBM_CLOUD_URL}" \
+    --build-arg IBM_TOKEN_URL="${IBM_TOKEN_URL}" \
+    --build-arg BUCKET_NAME="${BUCKET_NAME}" \
+    -t storage-image:latest \
+    -f storage.Dockerfile .
 
- docker run \     
-    -p 8001:8001 \
-    -e BASE_URL="$BASE_URL" \
-    -e GPT_PORT="$GPT_PORT" \
-    -e POSTING_PORT="$POSTING_PORT" \
-    -e STORAGE_PORT="$STORAGE_PORT" \
-    -e KOGPT_API="$KOGPT_API" \
-    -e CHATGPT_API="$CHATGPT_API" \
-    posting-image:latest
-
-docker run \
-     -p 8002:8002 \
-     -e IBM_API_KEY=${IBM_API_KEY} \
-     -e IBM_CLOUD_URL=${IBM_CLOUD_URL} \
-     -e IBM_TOKEN_URL=${IBM_TOKEN_URL} \
-     -e BUCKET_NAME=${BUCKET_NAME} \
-     -e BASE_URL=${BASE_URL} \
-     -e GPT_PORT=${GPT_PORT} \
-     -e POSTING_PORT=${POSTING_PORT} \
-     -e STORAGE_PORT=${STORAGE_PORT} \
-     storage-image:latest
+docker run -p 8000:8000 gpt-image:latest
+docker run -p 8001:8001 posting-image:latest
+docker run -p 8002:8002 storage-image:latest
 ```
 
 ### ❗️핵심 기능
