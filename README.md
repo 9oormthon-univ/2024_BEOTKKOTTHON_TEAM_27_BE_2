@@ -19,6 +19,7 @@ uvicorn main:app --reload --port=8002
 - 도커 이미지 빌드
 ```
 docker build \
+    --build-arg OPENAI_KEY="$OPENAI_KEY" \
     --build-arg REST_API_KEY="$REST_API_KEY" \
     --build-arg MAX_TOKENS="$MAX_TOKENS" \
     --build-arg TEMPERATURE="$TEMPERATURE" \
