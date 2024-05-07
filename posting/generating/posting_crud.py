@@ -1,10 +1,14 @@
 from PIL import Image
 from io import BytesIO
 import requests
-import config
+import os
 
 from generating.posting_schema import PostingTextRequest, PostingImageRequest
 from editing.edit_image import put_text_on_image
+
+BASE_URL = os.environ.get('BASE_URL')
+STORAGE_PORT = os.environ.get('STORAGE_PORT')
+
 
 font_list = ['WAGURI-TTF.ttf', 'DNFBitBitv2.ttf', 'goryung-strawberry.ttf', 'SDSamliphopangcheTTFOutline.ttf', 'Jalnan2TTF.ttf', 'KakaoBold.ttf']
 

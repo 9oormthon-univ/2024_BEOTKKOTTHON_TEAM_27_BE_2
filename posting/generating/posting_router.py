@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-import config
+import os
 import requests
 
 from generating.posting_schema import PostingTextRequest, PostingImageRequest
@@ -9,10 +9,10 @@ router = APIRouter(
     prefix="/api/posting",
 )
 
-BASE_URL = config.BASE_URL
-GPT_PORT = config.GPT_PORT
-KOGPT_API = config.KOGPT_API
-CHATGPT_API = config.CHATGPT_API
+BASE_URL = os.environ.get('BASE_URL')
+GPT_PORT = os.environ.get('GPT_PORT')
+KOGPT_API = os.environ.get('KOGPT_API')
+CHATGPT_API = os.environ.get('CHATGPT_API')
 
 
 @router.post("/text", status_code=200)
