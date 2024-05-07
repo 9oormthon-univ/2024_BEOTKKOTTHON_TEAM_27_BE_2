@@ -15,6 +15,46 @@ cd storage
 uvicorn main:app --reload --port=8002
 ```
 
+### 🐳 CI/CD 파이프라임
+- 도커 이미지 빌드
+```
+docker build \
+    --build-arg OPENAI_KEY="$OPENAI_KEY" \
+    --build-arg REST_API_KEY="$REST_API_KEY" \
+    --build-arg MAX_TOKENS="$MAX_TOKENS" \
+    --build-arg TEMPERATURE="$TEMPERATURE" \
+    --build-arg TOP_P="$TOP_P" \
+    --build-arg N="$N" \
+    -t gpt-image:latest \
+    -f gpt.Dockerfile .
+
+docker build \
+    --build-arg BASE_URL="$BASE_URL" \
+    --build-arg GPT_PORT="$GPT_PORT" \
+    --build-arg POSTING_PORT="$POSTING_PORT" \
+    --build-arg STORAGE_PORT="$STORAGE_PORT" \
+    --build-arg KOGPT_API="$KOGPT_API" \
+    --build-arg CHATGPT_API="$CHATGPT_API" \
+    -t posting-image:latest \
+    -f posting.Dockerfile .
+  
+docker build \
+    --build-arg BASE_URL="$BASE_URL" \
+    --build-arg GPT_PORT="$GPT_PORT" \
+    --build-arg POSTING_PORT="$POSTING_PORT" \
+    --build-arg STORAGE_PORT="$STORAGE_PORT" \
+    --build-arg IBM_API_KEY="${IBM_API_KEY}" \
+    --build-arg IBM_CLOUD_URL="${IBM_CLOUD_URL}" \
+    --build-arg IBM_TOKEN_URL="${IBM_TOKEN_URL}" \
+    --build-arg BUCKET_NAME="${BUCKET_NAME}" \
+    -t storage-image:latest \
+    -f storage.Dockerfile .
+
+docker run -p 8000:8000 gpt-image:latest
+docker run -p 8001:8001 posting-image:latest
+docker run -p 8002:8002 storage-image:latest
+```
+
 ### ❗️핵심 기능
 - **Microservice Architecture**
   - Micro Service Architecture로 구현

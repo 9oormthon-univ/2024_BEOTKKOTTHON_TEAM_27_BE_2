@@ -1,12 +1,10 @@
-from starlette.config import Config
+import os
 
-config = Config('.env')
+BASE_URL = os.environ.get('BASE_URL')
 
-BASE_URL = config('BASE_URL')
+GPT_PORT = os.environ.get('GPT_PORT')
+POSTING_PORT = os.environ.get('POSTING_PORT')
+STORAGE_PORT = os.environ.get('STORAGE_PORT')
 
-GPT_PORT = config('GPT_PORT')
-POSTING_PORT = config('POSTING_PORT')
-STORAGE_PORT = config('STORAGE_PORT')
-
-KOGPT_API = config('KOGPT_API')
-CHATGPT_API = config('CHATGPT_API')
+KOGPT_API = os.environ.get('KOGPT_API')
+CHATGPT_API = os.environ.get('CHATGPT_API')

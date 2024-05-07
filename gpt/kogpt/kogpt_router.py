@@ -1,17 +1,9 @@
 from fastapi import APIRouter, HTTPException
 import requests
 import json
+from kogpt.config import *
 
 from kogpt.kogpt_schema import KoGPTRequest
-from starlette.config import Config
-
-config = Config('kogpt/.env')
-
-REST_API_KEY = config('REST_API_KEY')
-MAX_TOKENS = int(config('MAX_TOKENS'))
-TEMPERATURE = float(config('TEMPERATURE'))
-TOP_P = float(config('TOP_P'))
-N = int(config('N'))
 
 router = APIRouter(
     prefix="/api/gpt/kogpt",
@@ -53,9 +45,6 @@ def get_result(request: KoGPTRequest):
             "total_tokens": int # 총 토큰 수
         }
     '''
-
-    # print(response["id"])
-    # print(response["generations"][0]["text"])
 
     if r.status_code == 200:
         return {
