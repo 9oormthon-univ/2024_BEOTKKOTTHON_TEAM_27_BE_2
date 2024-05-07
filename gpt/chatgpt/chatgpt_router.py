@@ -2,12 +2,11 @@ from fastapi import APIRouter, HTTPException
 from openai import OpenAI
 import requests
 import json
+import os
 
 from chatgpt.chatgpt_schema import ChatGPTRequest
-from starlette.config import Config
 
-config = Config('chatgpt/.env')
-OPENAI_KEY = config('OPENAI_KEY')
+OPENAI_KEY = os.environ.get('OPENAI_KEY')
 MODEL = "gpt-4"
 
 client = OpenAI(
