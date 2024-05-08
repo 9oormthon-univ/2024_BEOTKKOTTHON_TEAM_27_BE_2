@@ -31,6 +31,8 @@ jobs:
       env:
         ECR_REGISTRY: ${{ env.ECR_REGISTRY }}
         ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+        IMAGE_TAG: ${{ github.sha }}
+
         OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
         REST_API_KEY: ${{ secrets.REST_API_KEY }}
         MAX_TOKENS: ${{ env.MAX_TOKENS }}
@@ -46,9 +48,9 @@ jobs:
         --build-arg TEMPERATURE=$TEMPERATURE \
         --build-arg TOP_P=$TOP_P \
         --build-arg N=$N \
-        -t ${{ env.ECR_REPOSITORY }}:latest \
+        -t ${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} \
         -f gpt.Dockerfile .
         
-        docker tag ${{ env.ECR_REPOSITORY }}:latest ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+        docker tag ${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
         
-        docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+        docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
