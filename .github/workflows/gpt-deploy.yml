@@ -4,7 +4,7 @@ on:
     push:
       paths:
         - "gpt/**"
-      branches: [main, release, feature]
+      branches: [main, release, feature, develop]
 
 jobs:
   deploy:
