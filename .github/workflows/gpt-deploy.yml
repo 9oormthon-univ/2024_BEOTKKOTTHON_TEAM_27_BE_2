@@ -21,7 +21,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
+        aws-region: ${{ vars.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -36,13 +36,13 @@ jobs:
         docker build \
         --build-arg OPENAI_KEY=${{ secrets.OPENAI_KEY }} \
         --build-arg REST_API_KEY=${{ secrets.REST_API_KEY }} \
-        --build-arg MAX_TOKENS=${{ env.MAX_TOKENS }} \
-        --build-arg TEMPERATURE=${{ env.TEMPERATURE }} \
-        --build-arg TOP_P=${{ env.TOP_P }} \
-        --build-arg N=${{ env.N }} \
-        -t ${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} \
+        --build-arg MAX_TOKENS=${{ vars.MAX_TOKENS }} \
+        --build-arg TEMPERATURE=${{ vars.TEMPERATURE }} \
+        --build-arg TOP_P=${{ vars.TOP_P }} \
+        --build-arg N=${{ vars.N }} \
+        -t ${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} \
         -f gpt.Dockerfile .
         
-        docker tag ${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+        docker tag ${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }}
         
-        docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+        docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }}
