@@ -1,0 +1,55 @@
+name: Build and Push Docker Image to Amazon ECR - GPT Server
+
+on:
+    push:
+      paths:
+        - "gpt/**"
+      branches: [main, release, feature, develop]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ env.ECR_REGISTRY }}
+        ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+        OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+        REST_API_KEY: ${{ secrets.REST_API_KEY }}
+        MAX_TOKENS: ${{ env.MAX_TOKENS }}
+        TEMPERATURE: ${{ env.TEMPERATURE }}
+        TOP_P: ${{ env.TOP_P }}
+        N: ${{ env.N }}
+
+      run: |
+        docker build \
+        --build-arg OPENAI_KEY=$OPENAI_KEY \
+        --build-arg REST_API_KEY=$REST_API_KEY \
+        --build-arg MAX_TOKENS=$MAX_TOKENS \
+        --build-arg TEMPERATURE=$TEMPERATURE \
+        --build-arg TOP_P=$TOP_P \
+        --build-arg N=$N \
+        -t ${{ env.ECR_REPOSITORY }}:latest \
+        -f gpt.Dockerfile .
+        
+        docker tag ${{ env.ECR_REPOSITORY }}:latest ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
+        
+        docker push ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
