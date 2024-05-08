@@ -40,9 +40,9 @@ jobs:
         --build-arg TEMPERATURE=${{ vars.TEMPERATURE }} \
         --build-arg TOP_P=${{ vars.TOP_P }} \
         --build-arg N=${{ vars.N }} \
-        -t ${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} \
+        -t ${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} \
         -f gpt.Dockerfile .
         
-        docker tag ${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }} ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }}
+        docker tag ${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
         
-        docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ vars.IMAGE_TAG }}
+        docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
