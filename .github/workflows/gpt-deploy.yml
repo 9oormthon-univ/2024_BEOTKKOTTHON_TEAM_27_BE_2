@@ -2,8 +2,8 @@ name: Build and Push Docker Image to Amazon ECR - GPT Server
 
 on:
     push:
-      paths:
-        - "gpt/**"
+#      paths:
+#        - "gpt/**"
       branches: [main, release, feature, develop]
 
 jobs:
