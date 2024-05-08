@@ -10,6 +10,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    env: production
 
     steps:
     - name: Checkout
@@ -32,7 +33,6 @@ jobs:
         ECR_REGISTRY: ${{ env.ECR_REGISTRY }}
         ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
         IMAGE_TAG: ${{ github.sha }}
-
         OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
         REST_API_KEY: ${{ secrets.REST_API_KEY }}
         MAX_TOKENS: ${{ env.MAX_TOKENS }}
