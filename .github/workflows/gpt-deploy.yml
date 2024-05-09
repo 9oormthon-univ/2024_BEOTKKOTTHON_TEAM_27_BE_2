@@ -33,10 +33,11 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
 
       run: |
+        echo ${{ vars.ECR_REGISTRY }}
+
         docker build \
         --build-arg OPENAI_KEY=${{ secrets.OPENAI_KEY }} \
         --build-arg REST_API_KEY=${{ secrets.REST_API_KEY }} \
@@ -47,6 +48,6 @@ jobs:
         -t ${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} \
         -f gpt.Dockerfile .
         
-        docker tag ${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+        docker tag ${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
         
-        docker push $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+        docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
