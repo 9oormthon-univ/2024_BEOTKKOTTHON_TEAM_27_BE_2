@@ -32,10 +32,10 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
+      env:
+        ECR_REPOSITORY: sodong-gpt
 
       run: |
-        echo ${{ vars.ECR_REGISTRY }}
-
         docker build \
         --build-arg OPENAI_KEY=${{ secrets.OPENAI_KEY }} \
         --build-arg REST_API_KEY=${{ secrets.REST_API_KEY }} \
@@ -43,9 +43,9 @@ jobs:
         --build-arg TEMPERATURE=${{ vars.TEMPERATURE }} \
         --build-arg TOP_P=${{ vars.TOP_P }} \
         --build-arg N=${{ vars.N }} \
-        -t ${{ vars.ECR_REPOSITORY }}:latest \
+        -t ${{ env.ECR_REPOSITORY }}:latest \
         -f gpt.Dockerfile .
         
-        docker tag ${{ vars.ECR_REPOSITORY }}:latest ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:latest
+        docker tag ${{ env.ECR_REPOSITORY }}:latest ${{ vars.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
         
-        docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:latest
+        docker push ${{ vars.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
