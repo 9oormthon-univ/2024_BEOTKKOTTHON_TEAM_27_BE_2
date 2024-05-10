@@ -44,7 +44,7 @@ jobs:
         --build-arg TOP_P=${{ vars.TOP_P }} \
         --build-arg N=${{ vars.N }} \
         -t ${{ env.ECR_REPOSITORY }}:latest \
-        -f gpt.Dockerfile .
+        -f storage.Dockerfile .
         
         docker tag ${{ env.ECR_REPOSITORY }}:latest ${{ vars.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:latest
         
