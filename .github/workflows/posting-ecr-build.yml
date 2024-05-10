@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to Amazon ECR - Storage Server
+name: Build and Push Docker Image to Amazon ECR - Posting Server
 
 on:
     push:
@@ -33,7 +33,7 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        ECR_REPOSITORY: sodong-storage
+        ECR_REPOSITORY: sodong-posting
 
       run: |
         docker build \
