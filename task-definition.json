@@ -1,0 +1,95 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:590183940412:task-definition/sodong-task:1",
+    "containerDefinitions": [
+        {
+            "name": "sodong-gpt-server",
+            "image": "public.ecr.aws/m6p6e3v4/sodong-gpt:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "sodong-gpt-server-8000-tcp",
+                    "containerPort": 8000,
+                    "hostPort": 8000,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "systemControls": []
+        },
+        {
+            "name": "sodong-posting-server",
+            "image": "public.ecr.aws/m6p6e3v4/sodong-posting:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "sodong-posting-server-8001-tcp",
+                    "containerPort": 8001,
+                    "hostPort": 8001,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "systemControls": []
+        },
+        {
+            "name": "sodong-storage-server",
+            "image": "public.ecr.aws/m6p6e3v4/sodong-storage:latest",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "sodong-storage-server-8002-tcp",
+                    "containerPort": 8002,
+                    "hostPort": 8002,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "systemControls": []
+        }
+    ],
+    "family": "sodong-task",
+    "executionRoleArn": "arn:aws:iam::590183940412:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "revision": 1,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    },
+    "registeredAt": "2024-05-10T15:00:53.816Z",
+    "registeredBy": "arn:aws:iam::590183940412:root",
+    "tags": []
+}
